@@ -1,0 +1,40 @@
+version: "3.9"
+services:
+
+  registry:
+    image: registry:2
+    container_name: sbis-archive-registry
+    ports:
+      - "5005:5005"
+    restart: always
+    networks:
+      - sbis-archive-network
+  
+  # service:
+  #   image: ${REGISTRY:-localhost:5005}/sbis-archive-server-service:main-1
+  #   build:
+  #     context: .
+  #     dockerfile: ./docker/service/Dockerfile
+  #   restart: always
+  #   depends_on:
+  #     - registry
+  #   networks:
+  #     - sbis-archive-network
+  #   volumes:
+  #     - config:/app/config
+  #   environment:
+  #     CONFIG_PATH: './config/local.yaml'
+  #     MANTICORE_HOST: 'manticore'
+  #   command: './sbis-archive-server-service'
+  #   deploy:
+  #     replicas: 1
+  #     restart_policy:
+  #       condition: on-failure
+
+volumes:
+  config:
+
+networks:
+  sbis-archive-network:
+    name: sbis-archive-network
+    # external: true
